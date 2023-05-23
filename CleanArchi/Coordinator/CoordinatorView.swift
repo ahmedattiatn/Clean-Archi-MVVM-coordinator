@@ -21,9 +21,6 @@ struct CoordinatorView: View {
                 .sheet(item: $coordinator.sheet) { sheet in
                     coordinator.build(sheet: sheet)
                 }
-                .fullScreenCover(item: $coordinator.fullScreenCover) { fullScreenCover in
-                    coordinator.build(fullScreenCover: fullScreenCover)
-                }
         }
         .environmentObject(coordinator)
     }

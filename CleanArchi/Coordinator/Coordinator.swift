@@ -11,22 +11,7 @@ import SwiftUI
 
 enum Page: Hashable, Identifiable {
     case teams
-    case teamsDetail(Team)
 
-    var id: String {
-        return UUID().uuidString
-    }
-
-    public func hash(into hasher: inout Hasher) {
-        return hasher.combine(self.id)
-    }
-}
-
-// MARK: - FullScreenCover
-
-enum FullScreenCover: Hashable, Identifiable {
-    case teams
-    case teamsDetail(Team)
     var id: String {
         return UUID().uuidString
     }
@@ -39,7 +24,6 @@ enum FullScreenCover: Hashable, Identifiable {
 // MARK: - Sheet
 
 enum Sheet: Hashable, Identifiable {
-    case teams
     case teamsDetail(Team)
 
     var id: String {
@@ -56,7 +40,6 @@ enum Sheet: Hashable, Identifiable {
 class Coordinator: ObservableObject {
     @Published var path = NavigationPath()
     @Published var sheet: Sheet?
-    @Published var fullScreenCover: FullScreenCover?
 
     func push(_ page: Page) {
         self.path.append(page)
@@ -64,10 +47,6 @@ class Coordinator: ObservableObject {
 
     func present(_ sheet: Sheet) {
         self.sheet = sheet
-    }
-
-    func present(_ fullScreenCover: FullScreenCover) {
-        self.fullScreenCover = fullScreenCover
     }
 
     func pop() {
@@ -81,10 +60,6 @@ class Coordinator: ObservableObject {
     func dismissSheet() {
         self.sheet = nil
     }
-
-    func dismissFullScreenCover() {
-        self.fullScreenCover = nil
-    }
 }
 
 extension Coordinator {
@@ -93,26 +68,12 @@ extension Coordinator {
         switch page {
         case .teams:
             TeamsConfigurator.configureTeamsView()
-        case .teamsDetail(let team):
-            TeamDetailConfigurator.configureTeamDetailView(with: team)
         }
     }
 
     @ViewBuilder
     func build(sheet: Sheet) -> some View {
         switch sheet {
-        case .teams:
-            TeamsConfigurator.configureTeamsView()
-        case .teamsDetail(let team):
-            TeamDetailConfigurator.configureTeamDetailView(with: team)
-        }
-    }
-
-    @ViewBuilder
-    func build(fullScreenCover: FullScreenCover) -> some View {
-        switch fullScreenCover {
-        case .teams:
-            TeamsConfigurator.configureTeamsView()
         case .teamsDetail(let team):
             TeamDetailConfigurator.configureTeamDetailView(with: team)
         }
