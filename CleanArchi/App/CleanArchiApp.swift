@@ -6,7 +6,7 @@
 import SwiftUI
 
 @main
-struct UsersApp: App {
+struct CleanArchiApp: App {
     var body: some Scene {
         WindowGroup {
             TeamsConfigurator.configureTeamsView()

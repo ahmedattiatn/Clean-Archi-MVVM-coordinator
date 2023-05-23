@@ -55,12 +55,16 @@ extension Teams: Equatable {
     }
 }
 
-// MARK: - Team + Equatable
+// MARK: - Team + Equatable, Hashable
 
-extension Team: Equatable {
+extension Team: Equatable, Hashable {
     static func == (lhs: Team, rhs: Team) -> Bool {
         return lhs.idTeam == rhs.idTeam &&
             lhs.strTeamBadge == rhs.strTeamBadge &&
             lhs.strTeamBanner == rhs.strTeamBanner
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        return hasher.combine(self.id)
     }
 }
